@@ -65,9 +65,12 @@ export default class HomeScreen extends React.Component {
         }
 
         const response = await axios.post('https://api.ocr.space/parse/image', form, headers)
-        let text = response.data.ParsedResults[0].ParsedText;
-        let cardName = text.split('\n')[0]
-        console.log(cardName)
+        let cardName = ''
+        let text = ''
+        if(response.data.ParsedResults.length) {
+          text = response.data.ParsedResults[0].ParsedText;
+          cardName = text.split('\n')[0]
+        }
         this.setState({
           snapped: true,
           photoUri: photo.uri,
